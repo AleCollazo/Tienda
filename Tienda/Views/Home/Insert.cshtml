@@ -1,0 +1,91 @@
+﻿@using Tienda.Models;
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@{
+    Marca marca = new Marca();
+    TipoProducto tipoProducto = new TipoProducto();
+    Producto producto = new Producto();
+    TIENDADBEntities tienda = new TIENDADBEntities();
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Insert</title>
+</head>
+<body>
+    <div>
+        <h3>Añadir marca</h3>
+        @using (Html.BeginForm("AddMarca", "Home", FormMethod.Post))
+        {
+            <p>@Html.Label("Código")</p>
+            <p>@Html.TextBoxFor(codigo => marca.MarcaId)</p>
+
+            <p>@Html.Label("Descripción")</p>
+            <p>@Html.TextBoxFor(descripcion => marca.Descripcion)</p>
+
+            <p><input type="submit" value="Añadir" /></p>
+        }
+        <hr />
+        <h3>Añadir tipo producto</h3>
+        @using (Html.BeginForm("AddTipoProducto", "Home", FormMethod.Post))
+        {
+            <p>@Html.Label("Código")</p>
+            <p>@Html.TextBoxFor(codigo => tipoProducto.TipoProductoId)</p>
+
+            <p>@Html.Label("Nombre")</p>
+            <p>@Html.TextBoxFor(nombre => tipoProducto.Nombre)</p>
+
+            <p><input type="submit" value="Añadir" /></p>
+        }
+        <hr />
+        <h3>Añadir producto</h3>
+        @using (Html.BeginForm("AddProducto", "Home", FormMethod.Post))
+        {
+            <p>@Html.Label("Marca")</p>
+            <p>
+                <select name="Marca">
+                    @foreach (var m in tienda.Marca)
+                    {
+                        <option value="@m.MarcaId">@m.Descripcion</option>
+                    }
+                </select>
+            </p>
+
+            <p>@Html.Label("Tipo producto")</p>
+            <p>
+                <select name="TipoProducto">
+                    @foreach (var tp in tienda.TipoProducto)
+                    {
+                        <option value="@tp.TipoProductoId">@tp.Nombre</option>
+                    }
+                </select>
+            </p>
+
+            <p>@Html.Label("Descripción")</p>
+            <p>@Html.TextBoxFor(descripcion => producto.Descripcion)</p>
+
+            <p>@Html.Label("Talla")</p>
+            <p>@Html.TextBoxFor(talla => producto.Talla)</p>
+
+            <p>@Html.Label("Color")</p>
+            <p>@Html.TextBoxFor(color => producto.Color)</p>
+
+            <p>@Html.Label("Precio")</p>
+            <p>@Html.TextBoxFor(precio => producto.Precio)</p>
+
+            <p>@Html.Label("Stock")</p>
+            <p>@Html.TextBoxFor(stock => producto.Stock)</p>
+
+            <p><input type="submit" value="Añadir" /></p>
+        }
+
+        <p>@Html.ActionLink("Volver", "Index", "Home")</p>
+    </div>
+</body>
+</html>

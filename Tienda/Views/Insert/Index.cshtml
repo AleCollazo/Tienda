@@ -1,6 +1,5 @@
 ﻿@using Tienda.Models;
 
-
 @{
     Layout = null;
 }
@@ -16,15 +15,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Insert</title>
+    <title>Insertar producto</title>
 </head>
 <body>
     <div>
         <h3>Añadir marca</h3>
-        @using (Html.BeginForm("AddMarca", "Home", FormMethod.Post))
+        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post))
         {
             <p>@Html.Label("Código")</p>
-            <p>@Html.TextBoxFor(codigo => marca.MarcaId)</p>
+            <p>@Html.TextBoxFor(codigo => marca.Codigo)</p>
 
             <p>@Html.Label("Descripción")</p>
             <p>@Html.TextBoxFor(descripcion => marca.Descripcion)</p>
@@ -33,10 +32,10 @@
         }
         <hr />
         <h3>Añadir tipo producto</h3>
-        @using (Html.BeginForm("AddTipoProducto", "Home", FormMethod.Post))
+        @using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post))
         {
             <p>@Html.Label("Código")</p>
-            <p>@Html.TextBoxFor(codigo => tipoProducto.TipoProductoId)</p>
+            <p>@Html.TextBoxFor(codigo => tipoProducto.Codigo)</p>
 
             <p>@Html.Label("Nombre")</p>
             <p>@Html.TextBoxFor(nombre => tipoProducto.Nombre)</p>
@@ -45,7 +44,7 @@
         }
         <hr />
         <h3>Añadir producto</h3>
-        @using (Html.BeginForm("AddProducto", "Home", FormMethod.Post))
+        @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post))
         {
             <p>@Html.Label("Marca")</p>
             <p>

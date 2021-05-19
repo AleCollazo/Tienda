@@ -9,26 +9,26 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>List</title>
+    <title>Listado de productos</title>
 </head>
 <body>
     <div>
         <h4>Buscar productos</h4>
-        @using (Html.BeginForm("FindProduct", "Home", FormMethod.Post))
-        { 
-        <p>@Html.TextBox("buscar")</p>
+        @using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
+        {
+            <p>@Html.TextBox("buscar")</p>
 
-        <p><input type="submit" value="Buscar"/></p>
+            <p><input type="submit" value="Buscar" /></p>
         }
         <hr />
-        @using (Html.BeginForm("generarTickect", "Home", FormMethod.Post))
-        { 
+        @using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
+        {
             foreach (var p in Model)
             {
                 <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
             }
             <br />
-            <p><input type="submit" value="Sacar ticket"/></p>
+            <p><input type="submit" value="Sacar ticket" /></p>
         }
 
         @Html.ActionLink("Volver", "Index", "Home")

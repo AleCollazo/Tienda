@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Insertar";
+    ViewBag.Title = LocalResources.Resources.tituloInsertar;
 }
 
 
@@ -13,71 +13,88 @@
     TIENDADBEntities tienda = new TIENDADBEntities();
 }
 
+<div class="row">
+    <div class="col-6 col-lg-8">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirMarcaHeader</h4></div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post))
+                        {
+                            @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
+                            @Html.TextBoxFor(codigo => marca.Codigo, new { id = "codigoMarca", @class = "form-control  mb-4" })
 
-<h3>Añadir marca</h3>
-@using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post))
-{
-    <p>@Html.Label("Código")</p>
-    <p>@Html.TextBoxFor(codigo => marca.Codigo)</p>
+                            @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
+                            @Html.TextBoxFor(descripcion => marca.Descripcion, new { id = "descripcionMarca", @class = "form-control  mb-4" })
 
-    <p>@Html.Label("Descripción")</p>
-    <p>@Html.TextBoxFor(descripcion => marca.Descripcion)</p>
+                            <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirTipoProducto</h4></div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post))
+                        {
+                            @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoTipoProducto", @class = "form-label user-select-none" })
+                            @Html.TextBoxFor(codigo => tipoProducto.Codigo, new { id = "codigoTipoProducto", @class = "form-control  mb-4" })
 
-    <p><input type="submit" value="Añadir" /></p>
-}
-<hr />
-<h3>Añadir tipo producto</h3>
-@using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post))
-{
-    <p>@Html.Label("Código")</p>
-    <p>@Html.TextBoxFor(codigo => tipoProducto.Codigo)</p>
+                            @Html.Label(LocalResources.Resources.nombreLbl, new { @for = "nombreTipoProducto", @class = "form-label user-select-none" })
+                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, new { id = "nombreTipoProducto", @class = "form-control  mb-4" })
 
-    <p>@Html.Label("Nombre")</p>
-    <p>@Html.TextBoxFor(nombre => tipoProducto.Nombre)</p>
+                            <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-4">
+        <div class="card shadow">
+            <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirProducto</h4></div>
+            <div class="card-body">
+                @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post))
+                {
+                    @Html.Label(LocalResources.Resources.marcaLbl, new { @for = "marca", @class = "form-label user-select-none" })
 
-    <p><input type="submit" value="Añadir" /></p>
-}
-<hr />
-<h3>Añadir producto</h3>
-@using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post))
-{
-    <p>@Html.Label("Marca")</p>
-    <p>
-        <select name="Marca">
-            @foreach (var m in tienda.Marca)
-            {
-                <option value="@m.MarcaId">@m.Descripcion</option>
-            }
-        </select>
-    </p>
+                    <select name="Marca" id="marca" class="form-control mb-4">
+                        @foreach (var m in tienda.Marca)
+                        {
+                            <option value="@m.MarcaId">@m.Descripcion</option>
+                        }
+                    </select>
 
-    <p>@Html.Label("Tipo producto")</p>
-    <p>
-        <select name="TipoProducto">
-            @foreach (var tp in tienda.TipoProducto)
-            {
-                <option value="@tp.TipoProductoId">@tp.Nombre</option>
-            }
-        </select>
-    </p>
+                    @Html.Label(LocalResources.Resources.tipoProductoLbl, new { @for = "tipoProducto", @class = "form-label user-select-none" })
 
-    <p>@Html.Label("Descripción")</p>
-    <p>@Html.TextBoxFor(descripcion => producto.Descripcion)</p>
+                    <select name="TipoProducto" id="tipoProducto" class="form-control mb-4">
+                        @foreach (var tp in tienda.TipoProducto)
+                        {
+                            <option value="@tp.TipoProductoId">@tp.Nombre</option>
+                        }
+                    </select>
 
-    <p>@Html.Label("Talla")</p>
-    <p>@Html.TextBoxFor(talla => producto.Talla)</p>
 
-    <p>@Html.Label("Color")</p>
-    <p>@Html.TextBoxFor(color => producto.Color)</p>
+                    @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionProducto", @class = "form-label user-select-none" })
+                    @Html.TextBoxFor(descripcion => producto.Descripcion, new { id = "descripcionProducto", @class = "form-control mb-4" })
 
-    <p>@Html.Label("Precio")</p>
-    <p>@Html.TextBoxFor(precio => producto.Precio)</p>
+                    @Html.Label(LocalResources.Resources.tallaLbl, new { @for = "talla", @class = "form-label user-select-none" })
+                    @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control mb-4" })
 
-    <p>@Html.Label("Stock")</p>
-    <p>@Html.TextBoxFor(stock => producto.Stock)</p>
+                    @Html.Label(LocalResources.Resources.colorLbl, new { @for = "color", @class = "form-label user-select-none" })
+                    @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control mb-4" })
 
-    <p><input type="submit" value="Añadir" /></p>
-}
+                    @Html.Label(LocalResources.Resources.precioLbl, new { @for = "precio", @class = "form-label user-select-none" })
+                    @Html.TextBoxFor(precio => producto.Precio, new { id = "precio", @class = "form-control mb-4" })
 
-<p>@Html.ActionLink("Volver", "Index", "Home")</p>
+                    @Html.Label(LocalResources.Resources.stockLbl, new { @for = "stock", @class = "form-label user-select-none" })
+                    @Html.TextBoxFor(stock => producto.Stock, new { id = "stock", @class = "form-control mb-4" })
 
+                    <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

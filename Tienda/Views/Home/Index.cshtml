@@ -1,16 +1,10 @@
 ﻿
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Inicio";
+    ViewBag.Title = LocalResources.Resources.tituloInicio;
 }
 
 
-<ul>
-    <li>
-        @Html.ActionLink("Insertar productos", "Index", "Insert")
-    </li>
-    <li>
-        @Html.ActionLink("Listar productos", "Index", "List")
-    </li>
-</ul>
+<h1>@LocalResources.Resources.tituloInicio</h1>
 

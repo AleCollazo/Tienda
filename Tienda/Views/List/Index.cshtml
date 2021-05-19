@@ -2,27 +2,42 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Listado";
+    ViewBag.Title = LocalResources.Resources.tituloListado;
 }
 
+<div class="row">
 
-<h4>Buscar productos</h4>
-@using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
-{
-    <p>@Html.TextBox("buscar")</p>
+    <div class="col-8">
+        <div class="card shadow">
+            <div class="card-title">
+                <h4>@LocalResources.Resources.tituloListadoProductos</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
+                {
+                    foreach (var p in Model)
+                    {
+                        <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
+                    }
+                    <br />
+                    <p><input type="submit" value="@LocalResources.Resources.sacarTicketBtn" class="btn btn-dark"/></p>
+                }
+            </div>
+        </div>
+    </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-title text-center">
+                        <h4>@LocalResources.Resources.tituloBuscar</h4>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
+                        {
+                            @Html.TextBox(LocalResources.Resources.buscarText, null, new { @class = "form-control mb-4" })
 
-    <p><input type="submit" value="Buscar" /></p>
-}
-<hr />
-@using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
-{
-    foreach (var p in Model)
-    {
-        <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
-    }
-    <br />
-    <p><input type="submit" value="Sacar ticket" /></p>
-}
-
-@Html.ActionLink("Volver", "Index", "Home")
-
+                            <input type="submit" value="@LocalResources.Resources.buscarText" class="btn btn-dark" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>

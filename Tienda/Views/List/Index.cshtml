@@ -1,37 +1,28 @@
 ﻿@model List<Tienda.Models.Producto>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Listado";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Listado de productos</title>
-</head>
-<body>
-    <div>
-        <h4>Buscar productos</h4>
-        @using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
-        {
-            <p>@Html.TextBox("buscar")</p>
+<h4>Buscar productos</h4>
+@using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
+{
+    <p>@Html.TextBox("buscar")</p>
 
-            <p><input type="submit" value="Buscar" /></p>
-        }
-        <hr />
-        @using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
-        {
-            foreach (var p in Model)
-            {
-                <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
-            }
-            <br />
-            <p><input type="submit" value="Sacar ticket" /></p>
-        }
+    <p><input type="submit" value="Buscar" /></p>
+}
+<hr />
+@using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
+{
+    foreach (var p in Model)
+    {
+        <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
+    }
+    <br />
+    <p><input type="submit" value="Sacar ticket" /></p>
+}
 
-        @Html.ActionLink("Volver", "Index", "Home")
-    </div>
-</body>
-</html>
+@Html.ActionLink("Volver", "Index", "Home")
+

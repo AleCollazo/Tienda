@@ -1,25 +1,16 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Inicio";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Tienda</title>
-</head>
-<body>
-    <div> 
-        <ul>
-            <li>
-                @Html.ActionLink("Insertar productos", "Index", "Insert")
-            </li>
-            <li>
-                @Html.ActionLink("Listar productos", "Index", "List")
-            </li>
-        </ul>
-    </div>
-</body>
-</html>
+<ul>
+    <li>
+        @Html.ActionLink("Insertar productos", "Index", "Insert")
+    </li>
+    <li>
+        @Html.ActionLink("Listar productos", "Index", "List")
+    </li>
+</ul>
+

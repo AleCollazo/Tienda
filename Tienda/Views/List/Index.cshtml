@@ -6,38 +6,40 @@
 }
 
 <div class="row">
-
     <div class="col-8">
         <div class="card shadow">
             <div class="card-title">
-                <h4>@LocalResources.Resources.tituloListadoProductos</h4>
+                <h4 class="user-select-none">@LocalResources.Resources.tituloListadoProductos</h4>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
-                {
-                    foreach (var p in Model)
-                    {
-                        <p>@Html.CheckBox(p.ProductoId.ToString()) @p.Descripcion</p>
-                    }
-                    <br />
-                    <p><input type="submit" value="@LocalResources.Resources.sacarTicketBtn" class="btn btn-dark"/></p>
+                 @using (Html.BeginForm("generarTickect", "List", FormMethod.Post))
+                 {
+                  <div id="list" class="overflow-auto mb-3">
+                      <ul class="list-group">
+                          @foreach (var p in Model)
+                          {
+                              <li class="list-group-item user-select-none">@Html.CheckBox(p.ProductoId.ToString(), new { @class = "d-none cbx" }) @p.Descripcion</li>
+                          }
+                      </ul>
+                  </div>
+                 <input type="submit" value="@LocalResources.Resources.sacarTicketBtn" class="btn btn-dark"/>
                 }
             </div>
         </div>
     </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-title text-center">
-                        <h4>@LocalResources.Resources.tituloBuscar</h4>
-                    </div>
-                    <div class="card-body">
-                        @using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
-                        {
-                            @Html.TextBox(LocalResources.Resources.buscarText, null, new { @class = "form-control mb-4" })
+    <div class="col-4">
+        <div class="card">
+            <div class="card-title text-center">
+                <h4 class="user-select-none">@LocalResources.Resources.tituloBuscar</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("FindProduct", "List", FormMethod.Post))
+                {
+                    @Html.TextBox(LocalResources.Resources.buscarText, null, new { @class = "form-control mb-4" })
 
-                            <input type="submit" value="@LocalResources.Resources.buscarText" class="btn btn-dark" />
-                        }
-                    </div>
-                </div>
+                    <input type="submit" value="@LocalResources.Resources.buscarText" class="btn btn-dark" />
+                }
             </div>
         </div>
+    </div>
+</div>

@@ -9,8 +9,6 @@ namespace Tienda.Controllers
 {
     public class InsertController : Controller
     {
-        private TIENDADBEntities tienda = new TIENDADBEntities();
-
         // GET: Insert
         public ActionResult Index()
         {
@@ -21,53 +19,111 @@ namespace Tienda.Controllers
         [HttpPost]
         public ActionResult AddMarca(FormCollection collection)
         {
-            Marca marca = new Marca()
+            try
             {
-                Codigo = decimal.TryParse(collection["marca.Codigo"].ToString(), out decimal codigo) ? (decimal?)codigo : null,
-                Descripcion = collection["marca.Descripcion"].ToString()
-            };
+                if (!decimal.TryParse(collection["marca.Codigo"].ToString(), out decimal codigo))
+                    throw new Exception();
 
-            tienda.Marca.Add(marca);
-            tienda.SaveChanges();
+                string descripcion = collection["marca.Descripcion"].ToString();
+                if (string.IsNullOrEmpty(descripcion))
+                    throw new Exception();
 
-            return Redirect("Index");
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                {
+                    Marca marca = new Marca()
+                    {
+                        Codigo = codigo,
+                        Descripcion = descripcion
+                    };
+
+                    tienda.Marca.Add(marca);
+                    tienda.SaveChanges();
+
+                }
+            }
+            catch
+            {
+                return View("Index");
+            }
+            return View("Index");
         }
 
 
         [HttpPost]
         public ActionResult AddTipoProducto(FormCollection collection)
         {
-            TipoProducto tipoProducto = new TipoProducto()
+            try
             {
-                Codigo = decimal.TryParse(collection["tipoProducto.Codigo"].ToString(), out decimal codigo) ? (decimal?)codigo : null,
-                Nombre = collection["tipoProducto.Nombre"].ToString(),
-            };
+                if (!decimal.TryParse(collection["tipoProducto.Codigo"].ToString(), out decimal codigo))
+                    throw new Exception();
 
-            tienda.TipoProducto.Add(tipoProducto);
-            tienda.SaveChanges();
+                string nombre = collection["tipoProducto.Nombre"].ToString();
+                if (string.IsNullOrEmpty(nombre))
+                    throw new Exception();
 
-            return Redirect("Index");
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                {
+                    TipoProducto tipoProducto = new TipoProducto()
+                    {
+                        Codigo =  codigo,
+                        Nombre = nombre,
+                    };
+
+                    tienda.TipoProducto.Add(tipoProducto);
+                    tienda.SaveChanges();
+                }
+            }
+            catch
+            {
+                return View("Index");
+            }
+            return View("Index");
         }
 
 
         [HttpPost]
         public ActionResult AddProducto(FormCollection collection)
         {
-            Producto producto = new Producto()
+            try
             {
-                MarcaId = decimal.TryParse(collection["Marca"].ToString(), out decimal marcaId) ? (decimal?)marcaId : null,
-                TipoProductoId = decimal.TryParse(collection["TipoProducto"].ToString(), out decimal tipoProductoId) ? (decimal?)tipoProductoId : null,
-                Descripcion = collection["producto.Descripcion"].ToString(),
-                Talla = collection["producto.Talla"].ToString(),
-                Color = collection["producto.Color"].ToString(),
-                Precio = decimal.TryParse(collection["producto.Precio"].ToString(), out decimal precio) ? (decimal?)precio : null,
-                Stock = decimal.TryParse(collection["producto.Stock"].ToString(), out decimal stock) ? (decimal?)stock : null
-            };
+                if (!decimal.TryParse(collection["Marca"].ToString(), out decimal marcaId))
+                    throw new Exception();
 
-            tienda.Producto.Add(producto);
-            tienda.SaveChanges();
+                if (!decimal.TryParse(collection["TipoProducto"].ToString(), out decimal tipoProductoId))
+                    throw new Exception();
 
-            return Redirect("Index");
+                string descripcion = collection["producto.Descripcion"].ToString();
+                if (string.IsNullOrEmpty(descripcion))
+                    throw new Exception();
+
+                if(!decimal.TryParse(collection["producto.Precio"].ToString(), out decimal precio))
+                    throw new Exception();
+
+                if(decimal.TryParse(collection["producto.Stock"].ToString(), out decimal stock))
+                    throw new Exception();
+
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                {
+                    Producto producto = new Producto()
+                    {
+                        MarcaId = marcaId,
+                        TipoProductoId = tipoProductoId,
+                        Descripcion = descripcion,
+                        Talla = collection["producto.Talla"].ToString(),
+                        Color = collection["producto.Color"].ToString(),
+                        Precio = precio,
+                        Stock = stock
+                    };
+
+                    tienda.Producto.Add(producto);
+                    tienda.SaveChanges();
+                }
+            }
+            catch
+            {
+                return View("Index");
+            }
+            return View("Index");
         }
     }
 }

@@ -20,13 +20,15 @@
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirMarcaHeader</h4></div>
                     <div class="card-body">
-                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post))
+                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post,new { id = "insert-marca-form"}))
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(codigo => marca.Codigo, new { id = "codigoMarca", @class = "form-control  mb-4" })
+                            @Html.TextBoxFor(codigo => marca.Codigo, new { id = "codigoMarca", @class = "form-control  mb-4", @type = "number", required = "" })
+                            @Html.ValidationMessageFor(codigo => marca.Codigo);
 
                             @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(descripcion => marca.Descripcion, new { id = "descripcionMarca", @class = "form-control  mb-4" })
+                            @Html.TextBoxFor(descripcion => marca.Descripcion, new { id = "descripcionMarca", @class = "form-control  mb-4", required = "" })
+                            @Html.ValidationMessageFor(descripcion => marca.Descripcion);
 
                             <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                         }
@@ -37,13 +39,13 @@
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirTipoProducto</h4></div>
                     <div class="card-body">
-                        @using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post))
+                        @using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post, new { id = "insert-tipo-producto-form" }))
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoTipoProducto", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(codigo => tipoProducto.Codigo, new { id = "codigoTipoProducto", @class = "form-control  mb-4" })
+                            @Html.TextBoxFor(codigo => tipoProducto.Codigo, new { id = "codigoTipoProducto", @class = "form-control  mb-4", @type = "number", required = "" })
 
                             @Html.Label(LocalResources.Resources.nombreLbl, new { @for = "nombreTipoProducto", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, new { id = "nombreTipoProducto", @class = "form-control  mb-4" })
+                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, new { id = "nombreTipoProducto", @class = "form-control  mb-4", required = "" })
 
                             <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                         }
@@ -56,7 +58,7 @@
         <div class="card shadow">
             <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirProducto</h4></div>
             <div class="card-body">
-                @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post))
+                @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post, new { id = "insert-producto-form"}))
                 {
                     @Html.Label(LocalResources.Resources.marcaLbl, new { @for = "marca", @class = "form-label user-select-none" })
 
@@ -78,7 +80,7 @@
 
 
                     @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionProducto", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(descripcion => producto.Descripcion, new { id = "descripcionProducto", @class = "form-control mb-4" })
+                    @Html.TextBoxFor(descripcion => producto.Descripcion, new { id = "descripcionProducto", @class = "form-control mb-4", required = "" })
 
                     @Html.Label(LocalResources.Resources.tallaLbl, new { @for = "talla", @class = "form-label user-select-none" })
                     @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control mb-4" })
@@ -87,10 +89,10 @@
                     @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control mb-4" })
 
                     @Html.Label(LocalResources.Resources.precioLbl, new { @for = "precio", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(precio => producto.Precio, new { id = "precio", @class = "form-control mb-4" })
+                    @Html.TextBoxFor(precio => producto.Precio, new { id = "precio", @class = "form-control mb-4", required = "", pattern= @"\d+[\.\,]{1,1}\d{1,2}|\d+" })
 
                     @Html.Label(LocalResources.Resources.stockLbl, new { @for = "stock", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(stock => producto.Stock, new { id = "stock", @class = "form-control mb-4" })
+                    @Html.TextBoxFor(stock => producto.Stock, new { id = "stock", @class = "form-control mb-4", @type = "number", required = "" })
 
                     <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                 }

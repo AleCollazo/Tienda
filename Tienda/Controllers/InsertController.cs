@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace Tienda.Controllers
 {
     public class InsertController : Controller
     {
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
         // GET: Insert
         public ActionResult Index()
         {
@@ -41,8 +43,9 @@ namespace Tienda.Controllers
 
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Error(ex.Message, ex);
                 return View("Index");
             }
             return View("Index");
@@ -73,8 +76,9 @@ namespace Tienda.Controllers
                     tienda.SaveChanges();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Error(ex.Message, ex);
                 return View("Index");
             }
             return View("Index");
@@ -119,8 +123,9 @@ namespace Tienda.Controllers
                     tienda.SaveChanges();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Error(ex.Message, ex);
                 return View("Index");
             }
             return View("Index");

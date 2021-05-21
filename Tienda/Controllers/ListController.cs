@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,55 +10,98 @@ namespace Tienda.Controllers
 {
     public class ListController : Controller
     {
-        private TIENDADBEntities tienda = new TIENDADBEntities();
-
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
         // GET: List
         public ActionResult Index()
         {
-            return View(tienda.Producto.ToList());
+            List<Producto> productos = new List<Producto>();
+            
+            try
+            {
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                {
+                    productos = tienda.Producto.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                return View();
+            }
+            
+            return View(productos);
         }
 
         [HttpPost]
         public ActionResult FindProduct(FormCollection collection)
         {
-            string nombreBusqueda = collection["buscar"];
+            List<Producto> productos = new List<Producto>();
 
-            return View("Index", tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).ToList());
+            try
+            {
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                {
+                    string nombreBusqueda = collection["buscar"];
+                    productos = tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                return View();
+            }
+
+            return View("Index", productos);
         }
 
         [HttpPost]
         public ActionResult generarTickect(FormCollection collection)
         {
-            foreach (string date in collection)
+            List<Producto> productos = new List<Producto>();
+
+            try
             {
-                if (collection[date].Contains("true"))
+                using (TIENDADBEntities tienda = new TIENDADBEntities())
                 {
-                    if (decimal.TryParse(date, out decimal productoId))
+                    foreach (string date in collection)
                     {
-                        Producto producto = tienda.Producto.Where(p => p.ProductoId == productoId).FirstOrDefault();
-
-                        Ticket ticket = new Ticket()
+                        if (collection[date].Contains("true"))
                         {
-                            Fecha = DateTime.Now,
-                            Importe = producto.Precio,
-                            CantidadProductos = 1
-                        };
+                            if (decimal.TryParse(date, out decimal productoId))
+                            {
+                                Producto producto = tienda.Producto.Where(p => p.ProductoId == productoId).FirstOrDefault();
 
-                        tienda.Ticket.Add(ticket);
+                                Ticket ticket = new Ticket()
+                                {
+                                    Fecha = DateTime.Now,
+                                    Importe = producto.Precio,
+                                    CantidadProductos = 1
+                                };
 
-                        TicketDetalle ticketDetalle = new TicketDetalle()
-                        {
-                            TicketId = ticket.TicketId,
-                            ProductoId = producto.ProductoId
-                        };
+                                tienda.Ticket.Add(ticket);
 
-                        tienda.TicketDetalle.Add(ticketDetalle);
-                        tienda.SaveChanges();
+                                TicketDetalle ticketDetalle = new TicketDetalle()
+                                {
+                                    TicketId = ticket.TicketId,
+                                    ProductoId = producto.ProductoId
+                                };
+
+                                tienda.TicketDetalle.Add(ticketDetalle);
+                                tienda.SaveChanges();
+                            }
+                        }
                     }
+
+                    productos = tienda.Producto.ToList();
                 }
             }
+            catch(Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                return View();
+            }
 
-            return View("Index", tienda.Producto.ToList());
+            return View("Index", productos);
         }
     }
 }

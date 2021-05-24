@@ -6,7 +6,8 @@
         },
         descripcionMarca: {
             required: true
-        }
+        },
+        errorClass: "is-invalid error"
     });
 
     $('#insert-tipo-producto-form').validate({
@@ -16,7 +17,8 @@
         },
         nombreTipoProducto: {
             required: true
-        }
+        },
+        errorClass: "is-invalid error"
     });
 
     $('#insert-producto-form').validate({
@@ -30,6 +32,7 @@
         stock: {
             required: true,
             digits: true
-        }
-    })
+        },
+        errorClass: "is-invalid error"
+    });
 });

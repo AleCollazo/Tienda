@@ -40,7 +40,6 @@ namespace Tienda.Controllers
 
                     tienda.Marca.Add(marca);
                     tienda.SaveChanges();
-
                 }
             }
             catch (Exception ex)

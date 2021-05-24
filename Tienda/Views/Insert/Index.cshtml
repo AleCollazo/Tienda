@@ -23,13 +23,22 @@
                         @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post,new { id = "insert-marca-form"}))
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(codigo => marca.Codigo, new { id = "codigoMarca", @class = "form-control  mb-4", @type = "number", required = "" })
-                            @Html.ValidationMessageFor(codigo => marca.Codigo);
-
+                            @Html.TextBoxFor(codigo => marca.Codigo, 
+                                    new { id = "codigoMarca", 
+                                        @class = "form-control", 
+                                        @type = "number", 
+                                        required = "", 
+                                        data_msg_required = LocalResources.Resources.errorMsgRequired 
+                                    })
+                            <br />
                             @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(descripcion => marca.Descripcion, new { id = "descripcionMarca", @class = "form-control  mb-4", required = "" })
-                            @Html.ValidationMessageFor(descripcion => marca.Descripcion);
-
+                            @Html.TextBoxFor(descripcion => marca.Descripcion,
+                                    new { id = "descripcionMarca",
+                                        @class = "form-control",
+                                        required = "",
+                                        data_msg_required = LocalResources.Resources.errorMsgRequired
+                                    })
+                            <br />
                             <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                         }
                     </div>
@@ -42,11 +51,22 @@
                         @using (Html.BeginForm("AddTipoProducto", "Insert", FormMethod.Post, new { id = "insert-tipo-producto-form" }))
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoTipoProducto", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(codigo => tipoProducto.Codigo, new { id = "codigoTipoProducto", @class = "form-control  mb-4", @type = "number", required = "" })
-
+                            @Html.TextBoxFor(codigo => tipoProducto.Codigo,
+                                        new { id = "codigoTipoProducto",
+                                            @class = "form-control",
+                                            @type = "number",
+                                            required = "",
+                                            data_msg_required = LocalResources.Resources.errorMsgRequired
+                                        })
+                            <br />
                             @Html.Label(LocalResources.Resources.nombreLbl, new { @for = "nombreTipoProducto", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, new { id = "nombreTipoProducto", @class = "form-control  mb-4", required = "" })
-
+                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, 
+                                        new { id = "nombreTipoProducto", 
+                                            @class = "form-control", 
+                                            required = "",
+                                            data_msg_required = LocalResources.Resources.errorMsgRequired
+                                        })
+                            <br />
                             <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                         }
                     </div>
@@ -58,42 +78,58 @@
         <div class="card shadow">
             <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirProducto</h4></div>
             <div class="card-body">
-                @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post, new { id = "insert-producto-form"}))
+                @using (Html.BeginForm("AddProducto", "Insert", FormMethod.Post, new { id = "insert-producto-form" }))
                 {
                     @Html.Label(LocalResources.Resources.marcaLbl, new { @for = "marca", @class = "form-label user-select-none" })
-
-                    <select name="Marca" id="marca" class="form-control mb-4">
+                    <select name="Marca" id="marca" class="form-control">
                         @foreach (var m in tienda.Marca)
                         {
                             <option value="@m.MarcaId">@m.Descripcion</option>
                         }
                     </select>
-
+                    <br />
                     @Html.Label(LocalResources.Resources.tipoProductoLbl, new { @for = "tipoProducto", @class = "form-label user-select-none" })
-
-                    <select name="TipoProducto" id="tipoProducto" class="form-control mb-4">
+                    <select name="TipoProducto" id="tipoProducto" class="form-control">
                         @foreach (var tp in tienda.TipoProducto)
                         {
                             <option value="@tp.TipoProductoId">@tp.Nombre</option>
                         }
                     </select>
 
-
+                    <br />
                     @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionProducto", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(descripcion => producto.Descripcion, new { id = "descripcionProducto", @class = "form-control mb-4", required = "" })
-
+                    @Html.TextBoxFor(descripcion => producto.Descripcion, 
+                            new { id = "descripcionProducto", 
+                                @class = "form-control", 
+                                required = "",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired
+                            })
+                    <br />
                     @Html.Label(LocalResources.Resources.tallaLbl, new { @for = "talla", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control mb-4" })
-
+                    @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control" })
+                    <br />
                     @Html.Label(LocalResources.Resources.colorLbl, new { @for = "color", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control mb-4" })
-
+                    @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control" })
+                    <br />
                     @Html.Label(LocalResources.Resources.precioLbl, new { @for = "precio", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(precio => producto.Precio, new { id = "precio", @class = "form-control mb-4", required = "", pattern= @"\d+[\.\,]{1,1}\d{1,2}|\d+" })
-
+                    @Html.TextBoxFor(precio => producto.Precio, 
+                            new { id = "precio", 
+                                @class = "form-control", 
+                                required = "", 
+                                pattern = @"\d+[\.\,]{1,1}\d{1,2}|\d+",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired,
+                                data_msg_digits = LocalResources.Resources.errorMsgNumber
+                            })
+                    <br />
                     @Html.Label(LocalResources.Resources.stockLbl, new { @for = "stock", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(stock => producto.Stock, new { id = "stock", @class = "form-control mb-4", @type = "number", required = "" })
-
+                    @Html.TextBoxFor(stock => producto.Stock, 
+                            new { id = "stock", 
+                                @class = "form-control", 
+                                @type = "number", 
+                                required = "",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired
+                            })
+                    <br />
                     <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
                 }
             </div>

@@ -142,6 +142,24 @@ namespace LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valor numérico.
+        /// </summary>
+        public static string errorMsgNumber {
+            get {
+                return ResourceManager.GetString("errorMsgNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este campo es obligatorio.
+        /// </summary>
+        public static string errorMsgRequired {
+            get {
+                return ResourceManager.GetString("errorMsgRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Marca.
         /// </summary>
         public static string marcaLbl {

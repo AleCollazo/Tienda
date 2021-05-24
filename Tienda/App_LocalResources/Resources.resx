@@ -144,6 +144,12 @@
   <data name="descripcionLbl" xml:space="preserve">
     <value>Descripción</value>
   </data>
+  <data name="errorMsgNumber" xml:space="preserve">
+    <value>Valor numérico</value>
+  </data>
+  <data name="errorMsgRequired" xml:space="preserve">
+    <value>Este campo es obligatorio</value>
+  </data>
   <data name="marcaLbl" xml:space="preserve">
     <value>Marca</value>
   </data>

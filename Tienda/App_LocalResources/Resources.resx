@@ -141,6 +141,9 @@
   <data name="buscarText" xml:space="preserve">
     <value>Buscar</value>
   </data>
+  <data name="cantidadProductosLbl" xml:space="preserve">
+    <value>Cantidad de productos</value>
+  </data>
   <data name="codigoLbl" xml:space="preserve">
     <value>Código</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="descripcionLbl" xml:space="preserve">
     <value>Descripción</value>
+  </data>
+  <data name="descuentoLbl" xml:space="preserve">
+    <value>Descuento</value>
   </data>
   <data name="errorAñadirMarcaMsg" xml:space="preserve">
     <value>Error al añadir la marca en la base de datos</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="stockLbl" xml:space="preserve">
     <value>Stock</value>
+  </data>
+  <data name="subtotalLbl" xml:space="preserve">
+    <value>Subtotal</value>
   </data>
   <data name="tallaLbl" xml:space="preserve">
     <value>Talla</value>

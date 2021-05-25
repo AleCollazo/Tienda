@@ -17,11 +17,20 @@
         `
 })
 
+Vue.component('alert-insert', {
+    props: ['mensaje', 'show', 'error'],
+    template:
+    `
+    <div class="alert alert-dark" role="alert" v-if="show">
+        {{mensaje}}
+    </div>
+    `
+})
+
+
 var app = new Vue({
     el: '#app',
-    methods: {
-        showInsertModal: function () {
-            $('#modalInsert').modal('show')
-        }
+    data: {
+        message: 'Hello Vue!'
     }
 })

@@ -61,6 +61,33 @@ namespace LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Marca añadida correctamente.
+        /// </summary>
+        public static string añadidaMarcaMsg {
+            get {
+                return ResourceManager.GetString("añadidaMarcaMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Producto añadido correctamente.
+        /// </summary>
+        public static string añadidoProducto {
+            get {
+                return ResourceManager.GetString("añadidoProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de producto añadido correctamente.
+        /// </summary>
+        public static string añadidoTipoProductoMsg {
+            get {
+                return ResourceManager.GetString("añadidoTipoProductoMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Añadir.
         /// </summary>
         public static string añadirBtn {
@@ -142,6 +169,33 @@ namespace LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error al añadir la marca en la base de datos.
+        /// </summary>
+        public static string errorAñadirMarcaMsg {
+            get {
+                return ResourceManager.GetString("errorAñadirMarcaMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al añadir el producto.
+        /// </summary>
+        public static string errorAñadirProducto {
+            get {
+                return ResourceManager.GetString("errorAñadirProducto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al añadir el tipo de producto en la base de datos.
+        /// </summary>
+        public static string errorAñadirTipoProductoMsg {
+            get {
+                return ResourceManager.GetString("errorAñadirTipoProductoMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valor numérico.
         /// </summary>
         public static string errorMsgNumber {
@@ -165,6 +219,15 @@ namespace LocalResources {
         public static string marcaLbl {
             get {
                 return ResourceManager.GetString("marcaLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La marca ya existe.
+        /// </summary>
+        public static string marcaRepetidaMsg {
+            get {
+                return ResourceManager.GetString("marcaRepetidaMsg", resourceCulture);
             }
         }
         
@@ -246,6 +309,15 @@ namespace LocalResources {
         public static string tipoProductoLbl {
             get {
                 return ResourceManager.GetString("tipoProductoLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipo de producto ya existe.
+        /// </summary>
+        public static string tipoProductoRepetidoMsg {
+            get {
+                return ResourceManager.GetString("tipoProductoRepetidoMsg", resourceCulture);
             }
         }
         

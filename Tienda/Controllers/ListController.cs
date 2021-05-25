@@ -1,10 +1,12 @@
 ﻿using log4net;
+using MvcPaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Tienda.Models;
+using static Tienda.MvcApplication;
 
 namespace Tienda.Controllers
 {
@@ -12,15 +14,14 @@ namespace Tienda.Controllers
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
         // GET: List
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            List<Producto> productos = new List<Producto>();
-            
+
             try
             {
                 using (TIENDADBEntities tienda = new TIENDADBEntities())
                 {
-                    productos = tienda.Producto.ToList();
+                    ProductosContainer.Productos = tienda.Producto.ToList();
                 }
             }
             catch (Exception ex)
@@ -28,36 +29,64 @@ namespace Tienda.Controllers
                 Logger.Error(ex.Message, ex);
                 return View();
             }
+
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
             
-            return View(productos);
+            return View(pageListProducts);
+        }
+
+        public ActionResult FindProduct(int? page)
+        {
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
+
+            return View("Index", pageListProducts);
+        }
+
+        public ActionResult generarTickect(int? page)
+        {
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
+
+            return View("Index",pageListProducts);
+        }
+
+        public ActionResult AjaxPage(int? page)
+        {
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
+            return PartialView("_ListaProductos", pageListProducts);
         }
 
         [HttpPost]
         public ActionResult FindProduct(FormCollection collection)
         {
-            List<Producto> productos = new List<Producto>();
+            
 
             try
             {
                 using (TIENDADBEntities tienda = new TIENDADBEntities())
                 {
                     string nombreBusqueda = collection["buscar"];
-                    productos = tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).ToList();
+                    ProductosContainer.Productos = tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).ToList();
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.Message, ex);
-                return View();
+                return View("Index");
             }
 
-            return View("Index", productos);
+            int currentPageIndex = 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
+
+            return View("Index", pageListProducts);
         }
 
         [HttpPost]
-        public ActionResult generarTickect(FormCollection collection)
+        public ActionResult generarTickect(int? page, FormCollection collection)
         {
-            List<Producto> productos = new List<Producto>();
 
             try
             {
@@ -91,17 +120,18 @@ namespace Tienda.Controllers
                             }
                         }
                     }
-
-                    productos = tienda.Producto.ToList();
                 }
             }
             catch(Exception ex)
             {
                 Logger.Error(ex.Message, ex);
-                return View();
+                return View("Index");
             }
 
-            return View("Index", productos);
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            var pageListProducts = ProductosContainer.Productos.ToPagedList(currentPageIndex, 10);
+
+            return View("Index", pageListProducts);
         }
     }
 }

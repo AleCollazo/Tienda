@@ -1,0 +1,8 @@
+﻿@model IPagedList<Tienda.Models.Producto>
+
+<ul class="list-group">
+    @foreach (var producto in Model)
+    {
+        <li class="list-group-item user-select-none">@Html.CheckBox(producto.ProductoId.ToString(), new { @class = "d-none cbx" }) @producto.Descripcion</li>
+    }
+</ul>

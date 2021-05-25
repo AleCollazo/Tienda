@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Tienda.Models;
 
 namespace Tienda
 {
@@ -13,6 +14,13 @@ namespace Tienda
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            ProductosContainer.Productos = new List<Producto>();
+        }
+
+        public static class ProductosContainer
+        {
+            public static List<Producto> Productos { get; set; }
         }
     }
 }

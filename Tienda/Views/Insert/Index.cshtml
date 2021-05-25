@@ -1,4 +1,5 @@
 ﻿@using Tienda.Models;
+@model  InsertError
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,6 +14,11 @@
     TIENDADBEntities tienda = new TIENDADBEntities();
 }
 
+<div id="app">
+    <alert-insert mensaje="@Model.Mensaje" show=@Model.show></alert-insert>
+</div>
+
+
 <div class="row">
     <div class="col-6 col-lg-8">
         <div class="row">
@@ -20,22 +26,28 @@
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirMarcaHeader</h4></div>
                     <div class="card-body">
-                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post,new { id = "insert-marca-form"}))
+                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post, new { id = "insert-marca-form" }))
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(codigo => marca.Codigo, 
-                                    new { id = "codigoMarca", 
-                                        @class = "form-control", 
-                                        @type = "number", 
-                                        required = "", 
-                                        data_msg_required = LocalResources.Resources.errorMsgRequired 
+                            @Html.TextBoxFor(codigo => marca.Codigo,
+                                    new
+                                    {
+                                        id = "codigoMarca",
+                                        @class = "form-control",
+                                        @type = "number",
+                                        required = "",
+                                        autocomplete = "off",
+                                        data_msg_required = LocalResources.Resources.errorMsgRequired
                                     })
                             <br />
                             @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(descripcion => marca.Descripcion,
-                                    new { id = "descripcionMarca",
+                                    new
+                                    {
+                                        id = "descripcionMarca",
                                         @class = "form-control",
                                         required = "",
+                                        autocomplete = "off",
                                         data_msg_required = LocalResources.Resources.errorMsgRequired
                                     })
                             <br />
@@ -44,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 mt-5 col-lg-6 mt-lg-0">
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirTipoProducto</h4></div>
                     <div class="card-body">
@@ -52,18 +64,24 @@
                         {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoTipoProducto", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(codigo => tipoProducto.Codigo,
-                                        new { id = "codigoTipoProducto",
+                                        new
+                                        {
+                                            id = "codigoTipoProducto",
                                             @class = "form-control",
                                             @type = "number",
                                             required = "",
+                                            autocomplete = "off",
                                             data_msg_required = LocalResources.Resources.errorMsgRequired
                                         })
                             <br />
                             @Html.Label(LocalResources.Resources.nombreLbl, new { @for = "nombreTipoProducto", @class = "form-label user-select-none" })
-                            @Html.TextBoxFor(nombre => tipoProducto.Nombre, 
-                                        new { id = "nombreTipoProducto", 
-                                            @class = "form-control", 
+                            @Html.TextBoxFor(nombre => tipoProducto.Nombre,
+                                        new
+                                        {
+                                            id = "nombreTipoProducto",
+                                            @class = "form-control",
                                             required = "",
+                                            autocomplete = "off",
                                             data_msg_required = LocalResources.Resources.errorMsgRequired
                                         })
                             <br />
@@ -98,35 +116,44 @@
 
                     <br />
                     @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionProducto", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(descripcion => producto.Descripcion, 
-                            new { id = "descripcionProducto", 
-                                @class = "form-control", 
+                    @Html.TextBoxFor(descripcion => producto.Descripcion,
+                            new
+                            {
+                                id = "descripcionProducto",
+                                @class = "form-control",
                                 required = "",
+                                autocomplete = "off",
                                 data_msg_required = LocalResources.Resources.errorMsgRequired
                             })
                     <br />
                     @Html.Label(LocalResources.Resources.tallaLbl, new { @for = "talla", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control" })
+                    @Html.TextBoxFor(talla => producto.Talla, new { id = "talla", @class = "form-control", autocomplete = "off" })
                     <br />
                     @Html.Label(LocalResources.Resources.colorLbl, new { @for = "color", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control" })
+                    @Html.TextBoxFor(color => producto.Color, new { id = "color", @class = "form-control", autocomplete = "off" })
                     <br />
                     @Html.Label(LocalResources.Resources.precioLbl, new { @for = "precio", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(precio => producto.Precio, 
-                            new { id = "precio", 
-                                @class = "form-control", 
-                                required = "", 
+                    @Html.TextBoxFor(precio => producto.Precio,
+                            new
+                            {
+                                id = "precio",
+                                @class = "form-control",
+                                required = "",
                                 pattern = @"\d+[\.\,]{1,1}\d{1,2}|\d+",
+                                autocomplete = "off",
                                 data_msg_required = LocalResources.Resources.errorMsgRequired,
                                 data_msg_digits = LocalResources.Resources.errorMsgNumber
                             })
                     <br />
                     @Html.Label(LocalResources.Resources.stockLbl, new { @for = "stock", @class = "form-label user-select-none" })
-                    @Html.TextBoxFor(stock => producto.Stock, 
-                            new { id = "stock", 
-                                @class = "form-control", 
-                                @type = "number", 
+                    @Html.TextBoxFor(stock => producto.Stock,
+                            new
+                            {
+                                id = "stock",
+                                @class = "form-control",
+                                @type = "number",
                                 required = "",
+                                autocomplete = "off",
                                 data_msg_required = LocalResources.Resources.errorMsgRequired
                             })
                     <br />

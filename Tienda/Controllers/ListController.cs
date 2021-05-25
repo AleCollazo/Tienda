@@ -21,7 +21,7 @@ namespace Tienda.Controllers
             {
                 using (TIENDADBEntities tienda = new TIENDADBEntities())
                 {
-                    ProductosContainer.Productos = tienda.Producto.ToList();
+                    ProductosContainer.Productos = tienda.Producto.OrderBy(p => p.Descripcion).ToList();
                 }
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace Tienda.Controllers
                 using (TIENDADBEntities tienda = new TIENDADBEntities())
                 {
                     string nombreBusqueda = collection["buscar"];
-                    ProductosContainer.Productos = tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).ToList();
+                    ProductosContainer.Productos = tienda.Producto.Where(p => p.Descripcion.Contains(nombreBusqueda)).OrderBy(p => p.Descripcion).ToList();
                 }
             }
             catch (Exception ex)
@@ -98,13 +98,23 @@ namespace Tienda.Controllers
                         {
                             if (decimal.TryParse(date, out decimal productoId))
                             {
+                                decimal? cantidadProductos = 1;
+                                decimal? descuento = null;
+                                decimal? subtotal = null;
+
                                 Producto producto = tienda.Producto.Where(p => p.ProductoId == productoId).FirstOrDefault();
+
+                                if (decimal.TryParse(collection["cantidadProducto" + productoId], out decimal resultCantidadProductos)) cantidadProductos = resultCantidadProductos;
+                                if (decimal.TryParse(collection["descuento" + productoId], out decimal resultDescuento)) descuento = resultDescuento;
+                                if (decimal.TryParse(collection["subtotal" + productoId], out decimal resultSubtotal)) subtotal = resultSubtotal;
 
                                 Ticket ticket = new Ticket()
                                 {
                                     Fecha = DateTime.Now,
-                                    Importe = producto.Precio,
-                                    CantidadProductos = 1
+                                    Importe = producto.Precio*cantidadProductos,
+                                    CantidadProductos = cantidadProductos,
+                                    Descuento = descuento,
+                                    Subtotal = subtotal
                                 };
 
                                 tienda.Ticket.Add(ticket);

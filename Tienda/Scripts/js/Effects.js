@@ -18,12 +18,15 @@ $("#list li").click(function () {
     var $children = $this.children(".cbx");
     if ($children.length == 1) {
         var check = $children[0].checked = !$children[0].checked;
-    }
+        var $colldata = $('#coll-data-' + $children.attr('name'));
 
-    if (check) {
-        $this.addClass("active");
-    }
-    else {
-        $this.removeClass("active");
+        if (check) {
+            $this.addClass("active");
+            if ($colldata.length == 1) $colldata.show('slow');
+        }
+        else {
+            $this.removeClass("active");
+            if ($colldata.length == 1) $colldata.hide('slow');
+        }
     }
 })

@@ -1,10 +1,12 @@
 ﻿@using MvcPaging;
+@using Tienda.Models;
 
 @model IPagedList<Tienda.Models.Producto>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = LocalResources.Resources.tituloListado;
+    Ticket ticket = new Ticket();
 }
 
 <div class="row">
@@ -16,22 +18,58 @@
                 </div>
             </div>
             <div class="card-body">
-                 @using (Html.BeginForm("generarTickect", "List", new { page = Model.PageNumber},FormMethod.Post))
-                 {
-                <div id="list" class="overflow-auto mb-3">
-                    <ul class="list-group">
-                        @foreach (var producto in Model)
-                        {
-                            <li class="list-group-item user-select-none">@Html.CheckBox(producto.ProductoId.ToString(), new { @class = "d-none cbx" }) @producto.Descripcion</li>
-                        }
-                    </ul>
-                    <nav>
-                        <ul class="pagination">
-                            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+                @using (Html.BeginForm("generarTickect", "List", new { page = Model.PageNumber }, FormMethod.Post))
+                {
+                    <div id="list" class="overflow-auto mb-3">
+                        <ul class="list-group">
+                            @foreach (var producto in Model)
+                            {
+                                <li class="list-group-item user-select-none">@Html.CheckBox(producto.ProductoId.ToString(), new { @class = "d-none cbx" }) @producto.Descripcion</li>
+                                <div class="container small text-center bg-light coll-data card" id="coll-data-@producto.ProductoId.ToString()" style="display:none" >
+                                    <div class="row">
+                                        <div class="col mb-1">
+                                            @Html.Label(LocalResources.Resources.subtotalLbl, new { @for = "subtotal", @class = "form-label user-select-none" })
+                                            @Html.TextBox("subtotal"+ producto.ProductoId.ToString(), null,
+                                                    new { 
+                                                        id = "subtotal", 
+                                                        @class = "form-control form-control-sm", 
+                                                        @type = "number", 
+                                                        autocomplete = "off" 
+                                                    })
+                                        </div>
+                                        <div class="col mb-1">
+                                            @Html.Label(LocalResources.Resources.descuentoLbl, new { @for = "descuento", @class = "form-label user-select-none" })
+                                            @Html.TextBox("descuento"+producto.ProductoId.ToString(), null,
+                                                        new 
+                                                        { 
+                                                            id = "descuento", 
+                                                            @class = "form-control form-control-sm", 
+                                                            @type = "number", 
+                                                            autocomplete = "off" 
+                                                        })
+                                        </div>
+                                        <div class="col mb-1">
+                                            @Html.Label(LocalResources.Resources.cantidadProductosLbl, new { @for = "cantidadProductos", @class = "form-label user-select-none" })
+                                            @Html.TextBox("cantidadProducto"+producto.ProductoId.ToString(), 1,
+                                                        new 
+                                                        { 
+                                                            id = "cantidadProductos", 
+                                                            @class = "form-control form-control-sm", 
+                                                            @type = "number", 
+                                                            autocomplete = "off"
+                                                        })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </ul>
-                    </nav>
-                </div>
-                 <input type="submit" value="@LocalResources.Resources.sacarTicketBtn" class="btn btn-dark"/>
+                        <nav>
+                            <ul class="pagination justify-content-center mt-3">
+                                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+                            </ul>
+                        </nav>
+                    </div>
+                    <input type="submit" value="@LocalResources.Resources.sacarTicketBtn" class="btn btn-dark" />
                 }
             </div>
         </div>

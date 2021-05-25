@@ -133,6 +133,15 @@ namespace LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cantidad de productos.
+        /// </summary>
+        public static string cantidadProductosLbl {
+            get {
+                return ResourceManager.GetString("cantidadProductosLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código.
         /// </summary>
         public static string codigoLbl {
@@ -165,6 +174,15 @@ namespace LocalResources {
         public static string descripcionLbl {
             get {
                 return ResourceManager.GetString("descripcionLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descuento.
+        /// </summary>
+        public static string descuentoLbl {
+            get {
+                return ResourceManager.GetString("descuentoLbl", resourceCulture);
             }
         }
         
@@ -282,6 +300,15 @@ namespace LocalResources {
         public static string stockLbl {
             get {
                 return ResourceManager.GetString("stockLbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtotal.
+        /// </summary>
+        public static string subtotalLbl {
+            get {
+                return ResourceManager.GetString("subtotalLbl", resourceCulture);
             }
         }
         

@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Tienda.Models;
 using Tienda.Controllers.Validaciones;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Tienda.Controllers
 {
@@ -22,54 +24,27 @@ namespace Tienda.Controllers
         [HttpPost]
         public ActionResult AddMarca(FormCollection collection)
         {
-            string mensajeSalida = "";
             try
             {
-                if (!decimal.TryParse(collection["marca.Codigo"].ToString(), out decimal codigo))
-                    throw new Exception("Error al convertir el código de marca a decimal");
+                MarcaResult marcaResult = collection.validarDatos(out Marca marca);
 
-                string descripcion = collection["marca.Descripcion"].ToString();
-                if (string.IsNullOrEmpty(descripcion))
-                    throw new Exception();
+                if (marcaResult.Error)
+                    return Json(marcaResult);
 
-                using (TIENDADBEntities tienda = new TIENDADBEntities())
-                {
-                    Marca marca = new Marca()
-                    {
-                        Codigo = codigo,
-                        Descripcion = descripcion
-                    };
-
-                    if (tienda.validarMarca(marca))
-                    {
-                        tienda.Marca.Add(marca);
-                        tienda.SaveChanges();
-                        mensajeSalida = LocalResources.Resources.añadidaMarcaMsg;
-                    }
-                    else 
-                    {
-                        mensajeSalida = LocalResources.Resources.marcaRepetidaMsg;
-                    }
-                }
+                marca.validar(ref marcaResult);
+                return Json(marcaResult);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.Message, ex);
-                return View("Index", 
-                    new InsertError 
-                    { 
+                return Json(
+                    new MarcaResult
+                    {
                         Mensaje = LocalResources.Resources.errorAñadirMarcaMsg,
-                        show = true,
-                        error = true
+                        Show = true,
+                        Error = true
                     });
             }
-            return View("Index",
-                new InsertError
-                {
-                    Mensaje = mensajeSalida,
-                    show = true,
-                    error = false
-                });
         }
 
 

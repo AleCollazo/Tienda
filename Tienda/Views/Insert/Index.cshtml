@@ -16,6 +16,7 @@
 
 <div id="app">
     <alert-insert mensaje="@Model.Mensaje" show=@Model.show></alert-insert>
+    <modal-insert></modal-insert>
 </div>
 
 
@@ -26,8 +27,7 @@
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirMarcaHeader</h4></div>
                     <div class="card-body">
-                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post, new { id = "insert-marca-form" }))
-                        {
+                        
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(codigo => marca.Codigo,
                                     new
@@ -39,6 +39,7 @@
                                         autocomplete = "off",
                                         data_msg_required = LocalResources.Resources.errorMsgRequired
                                     })
+                            <label for="codigoMarca" id="codigoMarca-error" class="error" style="display:none"></label>
                             <br />
                             @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(descripcion => marca.Descripcion,
@@ -50,9 +51,10 @@
                                         autocomplete = "off",
                                         data_msg_required = LocalResources.Resources.errorMsgRequired
                                     })
+                            <label for="descripcionMarca" id="codigoDescripcion-error" class="error" style="display:none"></label>
                             <br />
-                            <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
-                        }
+                            <input type="button" value="@LocalResources.Resources.añadirBtn" id="btn-anadir" class="btn btn-dark" />
+                        
                     </div>
                 </div>
             </div>

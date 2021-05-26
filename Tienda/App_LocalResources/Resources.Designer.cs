@@ -214,7 +214,25 @@ namespace LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valor numérico.
+        ///   Looks up a localized string similar to El código está repetido.
+        /// </summary>
+        public static string errorCodigoRepetido {
+            get {
+                return ResourceManager.GetString("errorCodigoRepetido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La descripción ya existe.
+        /// </summary>
+        public static string errorDescripciónRepetida {
+            get {
+                return ResourceManager.GetString("errorDescripciónRepetida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Introduce un valor numérico.
         /// </summary>
         public static string errorMsgNumber {
             get {
@@ -228,6 +246,15 @@ namespace LocalResources {
         public static string errorMsgRequired {
             get {
                 return ResourceManager.GetString("errorMsgRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de valor incorrecto.
+        /// </summary>
+        public static string errorTipoValor {
+            get {
+                return ResourceManager.GetString("errorTipoValor", resourceCulture);
             }
         }
         

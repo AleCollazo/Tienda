@@ -168,11 +168,20 @@
   <data name="errorAñadirTipoProductoMsg" xml:space="preserve">
     <value>Error al añadir el tipo de producto en la base de datos</value>
   </data>
+  <data name="errorCodigoRepetido" xml:space="preserve">
+    <value>El código está repetido</value>
+  </data>
+  <data name="errorDescripciónRepetida" xml:space="preserve">
+    <value>La descripción ya existe</value>
+  </data>
   <data name="errorMsgNumber" xml:space="preserve">
-    <value>Valor numérico</value>
+    <value>Introduce un valor numérico</value>
   </data>
   <data name="errorMsgRequired" xml:space="preserve">
     <value>Este campo es obligatorio</value>
+  </data>
+  <data name="errorTipoValor" xml:space="preserve">
+    <value>Tipo de valor incorrecto</value>
   </data>
   <data name="marcaLbl" xml:space="preserve">
     <value>Marca</value>

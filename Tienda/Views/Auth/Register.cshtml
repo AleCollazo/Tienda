@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Registro";
+}
+
+<div>
+    <h4>Registra un nuevo usuario</h4>
+    @using (Html.BeginForm("NewRegister", "Auth", FormMethod.Post))
+    {
+        @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" }) <br />
+        @Html.TextBox("user", null, new { id = "user" })<br /><br />
+
+        @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })<br />
+        @Html.TextBox("password", null, new { id = "password", @type = "password" })<br /> <br />
+
+        @Html.Label("Confirmar contraseña", new { @for = "confirm-password", @class = "form-label user-select-none" })<br />
+        @Html.TextBox("confirm-password", null, new { id = "confirm-password", @type = "password" })<br /> <br />
+
+        <input type="submit" value="Registarse" class="btn btn-dark" />
+    }
+</div>

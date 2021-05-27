@@ -31,6 +31,15 @@
                         <li class="nav-item ml-3 mr-3">
                             @Html.ActionLink(@LocalResources.Resources.menuListar, "Index", "List", null, new { @class = "nav-link user-select-none " + activoListado })
                         </li>
+                        <li class="nav-item ml-3 mr-3">
+                            @Html.ActionLink("Iniciar sesión", "Login", "Auth", null, new { @class = "nav-link user-select-none " + activoListado })
+                        </li>
+                        <li class="nav-item ml-3 mr-3">
+                            @Html.ActionLink("Registarse", "Register", "Auth", null, new { @class = "nav-link user-select-none " + activoListado })
+                        </li>
+                        <li class="nav-item ml-3 mr-3">
+                            @Html.ActionLink("Salir", "SignOut", "Auth", null, new { @class = "nav-link user-select-none " + activoListado })
+                        </li>
                     </ul>
                 </div>
             </div>

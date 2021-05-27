@@ -1,0 +1,19 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Login";
+}
+
+<div>
+    <h4>Iniciar sesión</h4>
+    @using (Html.BeginForm("SingIn", "Auth", FormMethod.Post))
+    {
+        @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" }) <br />
+        @Html.TextBox("user", null, new { id = "user" })<br /><br />
+
+        @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })<br />
+        @Html.TextBox("password", null, new { id = "password", @type = "password" })<br /> <br />
+
+        <input type="submit" value="Iniciar" class="btn btn-dark" />
+    }
+</div>

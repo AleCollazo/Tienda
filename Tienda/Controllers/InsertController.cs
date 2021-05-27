@@ -8,6 +8,7 @@ using Tienda.Models;
 using Tienda.Controllers.Validaciones;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Owin.Security;
 
 namespace Tienda.Controllers
 {
@@ -17,147 +18,163 @@ namespace Tienda.Controllers
         // GET: Insert
         public ActionResult Index()
         {
-            return View(new InsertError { show = false});
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(new InsertError { show = false });
+            }
+            return RedirectToAction("Login", "Auth");
         }
 
 
         [HttpPost]
         public ActionResult AddMarca(FormCollection collection)
         {
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                MarcaResult marcaResult = collection.validarDatos(out Marca marca);
+                try
+                {
+                    MarcaResult marcaResult = collection.validarDatos(out Marca marca);
 
-                if (marcaResult.Error)
+                    if (marcaResult.Error)
+                        return Json(marcaResult);
+
+                    marca.validar(ref marcaResult);
                     return Json(marcaResult);
-
-                marca.validar(ref marcaResult);
-                return Json(marcaResult);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message, ex);
+                    return Json(
+                        new MarcaResult
+                        {
+                            Mensaje = LocalResources.Resources.errorAñadirMarcaMsg,
+                            Show = true,
+                            Error = true
+                        });
+                }
             }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.Message, ex);
-                return Json(
-                    new MarcaResult
-                    {
-                        Mensaje = LocalResources.Resources.errorAñadirMarcaMsg,
-                        Show = true,
-                        Error = true
-                    });
-            }
+            return RedirectToAction("Index","Home");
         }
 
 
         [HttpPost]
         public ActionResult AddTipoProducto(FormCollection collection)
         {
-            string mensajeSalida = "";
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                if (!decimal.TryParse(collection["tipoProducto.Codigo"].ToString(), out decimal codigo))
-                    throw new Exception();
-
-                string nombre = collection["tipoProducto.Nombre"].ToString();
-                if (string.IsNullOrEmpty(nombre))
-                    throw new Exception();
-
-                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                string mensajeSalida = "";
+                try
                 {
-                    TipoProducto tipoProducto = new TipoProducto()
-                    {
-                        Codigo =  codigo,
-                        Nombre = nombre,
-                    };
+                    if (!decimal.TryParse(collection["tipoProducto.Codigo"].ToString(), out decimal codigo))
+                        throw new Exception();
 
-                    if (tienda.validarTipoProducto(tipoProducto))
+                    string nombre = collection["tipoProducto.Nombre"].ToString();
+                    if (string.IsNullOrEmpty(nombre))
+                        throw new Exception();
+
+                    using (TIENDADBEntities tienda = new TIENDADBEntities())
                     {
-                        tienda.TipoProducto.Add(tipoProducto);
-                        tienda.SaveChanges();
-                        mensajeSalida = LocalResources.Resources.añadidoTipoProductoMsg;
-                    }
-                    else
-                    {
-                        mensajeSalida = LocalResources.Resources.tipoProductoRepetidoMsg;
+                        TipoProducto tipoProducto = new TipoProducto()
+                        {
+                            Codigo = codigo,
+                            Nombre = nombre,
+                        };
+
+                        if (tienda.validarTipoProducto(tipoProducto))
+                        {
+                            tienda.TipoProducto.Add(tipoProducto);
+                            tienda.SaveChanges();
+                            mensajeSalida = LocalResources.Resources.añadidoTipoProductoMsg;
+                        }
+                        else
+                        {
+                            mensajeSalida = LocalResources.Resources.tipoProductoRepetidoMsg;
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.Message, ex);
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message, ex);
+                    return View("Index",
+                        new InsertError
+                        {
+                            Mensaje = LocalResources.Resources.errorAñadirTipoProductoMsg,
+                            show = true,
+                            error = true
+                        });
+                }
                 return View("Index",
                     new InsertError
                     {
-                        Mensaje = LocalResources.Resources.errorAñadirTipoProductoMsg,
+                        Mensaje = mensajeSalida,
                         show = true,
-                        error = true
+                        error = false
                     });
             }
-            return View("Index",
-                new InsertError
-                {
-                    Mensaje = mensajeSalida,
-                    show = true,
-                    error = false
-                });
+            return RedirectToAction("Home","Index");
         }
 
 
         [HttpPost]
         public ActionResult AddProducto(FormCollection collection)
         {
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                if (!decimal.TryParse(collection["Marca"].ToString(), out decimal marcaId))
-                    throw new Exception("Error al convertir la marca a decimal");
-
-                if (!decimal.TryParse(collection["TipoProducto"].ToString(), out decimal tipoProductoId))
-                    throw new Exception();
-
-                string descripcion = collection["producto.Descripcion"].ToString();
-                if (string.IsNullOrEmpty(descripcion))
-                    throw new Exception();
-
-                if(!decimal.TryParse(collection["producto.Precio"].ToString(), out decimal precio))
-                    throw new Exception();
-
-                if(!decimal.TryParse(collection["producto.Stock"].ToString(), out decimal stock))
-                    throw new Exception();
-
-                using (TIENDADBEntities tienda = new TIENDADBEntities())
+                try
                 {
-                    Producto producto = new Producto()
-                    {
-                        MarcaId = marcaId,
-                        TipoProductoId = tipoProductoId,
-                        Descripcion = descripcion,
-                        Talla = collection["producto.Talla"].ToString(),
-                        Color = collection["producto.Color"].ToString(),
-                        Precio = precio,
-                        Stock = stock
-                    };
+                    if (!decimal.TryParse(collection["Marca"].ToString(), out decimal marcaId))
+                        throw new Exception("Error al convertir la marca a decimal");
 
-                    tienda.Producto.Add(producto);
-                    tienda.SaveChanges();
+                    if (!decimal.TryParse(collection["TipoProducto"].ToString(), out decimal tipoProductoId))
+                        throw new Exception();
+
+                    string descripcion = collection["producto.Descripcion"].ToString();
+                    if (string.IsNullOrEmpty(descripcion))
+                        throw new Exception();
+
+                    if (!decimal.TryParse(collection["producto.Precio"].ToString(), out decimal precio))
+                        throw new Exception();
+
+                    if (!decimal.TryParse(collection["producto.Stock"].ToString(), out decimal stock))
+                        throw new Exception();
+
+                    using (TIENDADBEntities tienda = new TIENDADBEntities())
+                    {
+                        Producto producto = new Producto()
+                        {
+                            MarcaId = marcaId,
+                            TipoProductoId = tipoProductoId,
+                            Descripcion = descripcion,
+                            Talla = collection["producto.Talla"].ToString(),
+                            Color = collection["producto.Color"].ToString(),
+                            Precio = precio,
+                            Stock = stock
+                        };
+
+                        tienda.Producto.Add(producto);
+                        tienda.SaveChanges();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.Message, ex);
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message, ex);
+                    return View("Index",
+                        new InsertError
+                        {
+                            Mensaje = LocalResources.Resources.errorAñadirProducto,
+                            show = true,
+                            error = true
+                        });
+                }
                 return View("Index",
                     new InsertError
                     {
-                        Mensaje = LocalResources.Resources.errorAñadirProducto,
+                        Mensaje = LocalResources.Resources.añadidoProducto,
                         show = true,
-                        error = true
+                        error = false
                     });
             }
-            return View("Index",
-                new InsertError
-                {
-                    Mensaje = LocalResources.Resources.añadidoProducto,
-                    show = true,
-                    error = false
-                });
+            return RedirectToAction("Home", "Index");
         }
     }
 }

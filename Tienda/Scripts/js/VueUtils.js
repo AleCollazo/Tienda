@@ -1,4 +1,10 @@
 ﻿
+var card = {
+    template:
+
+}
+
+
 var modalInsert = {
     props: ['mensaje'],
     methods: {
@@ -41,6 +47,11 @@ var app = new Vue({
     },
     components: {
         'modal-insert': modalInsert,
-        'alert-insert' : alertInsert
+        'alert-insert': alertInsert,
+        'card': card,
     }
+})
+
+var insertVue = new ({
+    el: '#insert'
 })

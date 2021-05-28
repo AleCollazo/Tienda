@@ -34,8 +34,7 @@ namespace Tienda.Controllers
             }
             else
             {
-                //StatusText.Text = "Invalid username or password.";
-                //LoginStatus.Visible = true;
+                string error = "Invalid username or password."; //TODO
             }
             return RedirectToAction("Login");
         }
@@ -55,24 +54,27 @@ namespace Tienda.Controllers
         [HttpPost]
         public ActionResult NewRegister(FormCollection formCollection)
         {
-            var userStore = new UserStore<IdentityUser>();
-            var manager = new UserManager<IdentityUser>(userStore);
-            var user = new IdentityUser() { UserName = formCollection["user"] };
 
-            IdentityResult result = manager.Create(user, formCollection["password"]);
-            //TODO confirmar contraseña
-            if (result.Succeeded)
+            if (formCollection["confirm-password"] == formCollection["password"])
             {
-                var authenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
-                var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
-                return View("Login");
-            }
-            else
-            {
-                //StatusMessage.Text = result.Errors.FirstOrDefault();
-            }
+                var userStore = new UserStore<IdentityUser>();
+                var manager = new UserManager<IdentityUser>(userStore);
+                var user = new IdentityUser() { UserName = formCollection["user"] };
 
+                IdentityResult result = manager.Create(user, formCollection["password"]);
+                
+                if (result.Succeeded)
+                {
+                    var authenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
+                    var userIdentity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    authenticationManager.SignIn(new AuthenticationProperties() { }, userIdentity);
+                    return View("Login");
+                }
+                else
+                {
+                    string error = result.Errors.FirstOrDefault(); //TODO
+                }
+            }
             return View("Register");
         }
     }

@@ -4,16 +4,27 @@
     ViewBag.Title = "Login";
 }
 
-<div>
-    <h4>Iniciar sesión</h4>
-    @using (Html.BeginForm("SingIn", "Auth", FormMethod.Post))
-    {
-        @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" }) <br />
-        @Html.TextBox("user", null, new { id = "user" })<br /><br />
+<div class="row">
+    <div class="col-12 col-md-8 col-xl-4">
+        <div class="card shadow align-self-start">
+            <div class="card-header">
+                <h4 class="card-title">Iniciar sesión</h4>
+            </div>
+            
+            @using (Html.BeginForm("SingIn", "Auth", FormMethod.Post, new { id="form-login"}))
+            {
+                <div class="card-body">
+                    @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" })
+                    @Html.TextBox("user", null, new { id = "user", @class = "form-control", autocomplete = "off", required = "" })<br />
 
-        @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })<br />
-        @Html.TextBox("password", null, new { id = "password", @type = "password" })<br /> <br />
-
-        <input type="submit" value="Iniciar" class="btn btn-dark" />
-    }
+                    @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })
+                    @Html.TextBox("password", null, new { id = "password", @class = "form-control", @type = "password", autocomplete = "off", required = "" })
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Iniciar" class="btn btn-dark" />
+                </div>
+            }
+            
+        </div>
+    </div>
 </div>

@@ -4,19 +4,59 @@
     ViewBag.Title = "Registro";
 }
 
-<div>
-    <h4>Registra un nuevo usuario</h4>
-    @using (Html.BeginForm("NewRegister", "Auth", FormMethod.Post))
-    {
-        @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" }) <br />
-        @Html.TextBox("user", null, new { id = "user" })<br /><br />
+<div id="app">
+    
+</div>
 
-        @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })<br />
-        @Html.TextBox("password", null, new { id = "password", @type = "password" })<br /> <br />
+<div class="row">
+    <div class="col-12 col-md-8 col-xl-4">
+        <div class="card shadow align-self-start">
+            <div class="card-header">
+                <h4 class="card-title">Registra un nuevo usuario</h4>
+            </div>
 
-        @Html.Label("Confirmar contraseña", new { @for = "confirm-password", @class = "form-label user-select-none" })<br />
-        @Html.TextBox("confirm-password", null, new { id = "confirm-password", @type = "password" })<br /> <br />
+            @using (Html.BeginForm("NewRegister", "Auth", FormMethod.Post, new { id = "form-register" }))
+            {
+                <div class="card-body">
+                    @Html.Label("Usuario", new { @for = "user", @class = "form-label user-select-none" })
+                    @Html.TextBox("user", null,
+                            new
+                            {
+                                id = "user",
+                                @class = "form-control",
+                                autocomplete = "off",
+                                required ="",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired
+                            })
+                    <br />
 
-        <input type="submit" value="Registarse" class="btn btn-dark" />
-    }
+                    @Html.Label("Contraseña", new { @for = "password", @class = "form-label user-select-none" })
+                    @Html.TextBox("password", null,
+                            new {
+                                id = "password",
+                                @class = "form-control",
+                                @type = "password",
+                                autocomplete = "off",
+                                required = "",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired
+                            })
+                    <br />
+
+                    @Html.Label("Confirmar contraseña", new { @for = "confirm-password", @class = "form-label user-select-none" })
+                    @Html.TextBox("confirm-password", null,
+                            new {
+                                id = "confirm-password",
+                                @class = "form-control",
+                                @type = "password",
+                                autocomplete = "off",
+                                required = "",
+                                data_msg_required = LocalResources.Resources.errorMsgRequired
+                            })
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Registarse" class="btn btn-dark" />
+                </div>
+            }
+        </div>
+    </div>
 </div>

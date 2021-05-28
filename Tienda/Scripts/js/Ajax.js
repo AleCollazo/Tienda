@@ -11,7 +11,6 @@ var anadirMarca = function () {
                 'descripcion': descripcionMarca
             },
             success: function (data) {
-                console.log('ajax activado');
                 var $el = $('#modalInsert');
                 var $lblErrorCodigo = $('#codigoMarca-error');
                 var $lblErrorDescripcion = $('#codigoDescripcion-error');
@@ -39,7 +38,7 @@ var anadirMarca = function () {
                 }
 
                 if (data.Show) {
-                    $el.find('#modal-mensaje')[0].innerHTML = data.Mensaje;
+                    $el.find('#modal-mensaje').html(data.Mensaje);
                     $el.show();
                 }
                 if (!data.Error) {
@@ -53,7 +52,7 @@ var anadirMarca = function () {
         })
 }
 
-var enterPressMarca = function (event) {
+/*var enterPressMarca = function (event) {
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
         anadirMarca();
@@ -63,4 +62,4 @@ var enterPressMarca = function (event) {
 
 $('#btn-anadir').click(anadirMarca);
 $('#codigoMarca').keypress(enterPressMarca);
-$('#descripcionMarca').keypress(enterPressMarca);
+$('#descripcionMarca').keypress(enterPressMarca);*/

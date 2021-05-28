@@ -7,7 +7,10 @@
         descripcionMarca: {
             required: true
         },
-        errorClass: "is-invalid error"
+        errorClass: "is-invalid error",
+        submitHandler: function (form, event) {
+            anadirMarca();
+        }
     });
 
     $('#insert-tipo-producto-form').validate({

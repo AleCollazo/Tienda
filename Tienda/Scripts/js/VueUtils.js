@@ -1,5 +1,5 @@
 ﻿
-Vue.component('modal-insert', {
+var modalInsert = {
     props: ['mensaje'],
     methods: {
         cerrar: function (elemento) {
@@ -21,9 +21,9 @@ Vue.component('modal-insert', {
             </div>
         </div>
         `
-})
+}
 
-Vue.component('alert-insert', {
+var alertInsert = {
     props: ['mensaje', 'show', 'error'],
     template:
     `
@@ -31,12 +31,16 @@ Vue.component('alert-insert', {
         {{mensaje}}
     </div>
     `
-})
+}
 
 
 var app = new Vue({
     el: '#app',
     data: {
         message: 'Hello Vue!'
+    },
+    components: {
+        'modal-insert': modalInsert,
+        'alert-insert' : alertInsert
     }
 })

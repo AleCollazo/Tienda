@@ -27,35 +27,36 @@
                 <div class="card shadow">
                     <div class="card-header"><h4 class="card-title text-center">@LocalResources.Resources.añadirMarcaHeader</h4></div>
                     <div class="card-body">
-                        
+                        @using (Html.BeginForm("AddMarca", "Insert", FormMethod.Post, new { id = "insert-marca-form" }))
+                        {
                             @Html.Label(LocalResources.Resources.codigoLbl, new { @for = "codigoMarca", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(codigo => marca.Codigo,
-                                    new
-                                    {
-                                        id = "codigoMarca",
-                                        @class = "form-control",
-                                        @type = "number",
-                                        required = "",
-                                        autocomplete = "off",
-                                        data_msg_required = LocalResources.Resources.errorMsgRequired
-                                    })
+                                         new
+                                         {
+                                             id = "codigoMarca",
+                                             @class = "form-control",
+                                             @type = "number",
+                                             required = "",
+                                             autocomplete = "off",
+                                             data_msg_required = LocalResources.Resources.errorMsgRequired
+                                         })
                             <label for="codigoMarca" id="codigoMarca-error" class="error" style="display:none"></label>
                             <br />
                             @Html.Label(LocalResources.Resources.descripcionLbl, new { @for = "descripcionMarca", @class = "form-label user-select-none" })
                             @Html.TextBoxFor(descripcion => marca.Descripcion,
-                                    new
-                                    {
-                                        id = "descripcionMarca",
-                                        @class = "form-control",
-                                        required = "",
-                                        autocomplete = "off",
-                                        data_msg_required = LocalResources.Resources.errorMsgRequired
-                                    })
+                                         new
+                                         {
+                                             id = "descripcionMarca",
+                                             @class = "form-control",
+                                             required = "",
+                                             autocomplete = "off",
+                                             data_msg_required = LocalResources.Resources.errorMsgRequired
+                                         })
                             <label for="descripcionMarca" id="codigoDescripcion-error" class="error" style="display:none"></label>
                             <br />
-                            <input type="button" value="@LocalResources.Resources.añadirBtn" id="btn-anadir" class="btn btn-dark" />
-                        
-                    </div>
+                            <input type="submit" value="@LocalResources.Resources.añadirBtn" class="btn btn-dark" />
+                        }
+                        </div>
                 </div>
             </div>
             <div class="col-12 mt-5 col-lg-6 mt-lg-0">
